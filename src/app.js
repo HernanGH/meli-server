@@ -16,15 +16,15 @@ app.use(expressWinston.logger({
     meta: false,
     statusLevels: true
 }));
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-
-app.use('/', (req, res) => {
-    res.json({now: new Date()});
-});
+app.use(bodyParser.json());
 
 Object.keys(routes).forEach((key) => {
     app.use(`/api/${routes[key].path}`, routes[key].router);
+});
+
+app.use('/', (req, res) => {
+    res.json({now: new Date()});
 });
 
 app.use(function(req, res, next) {
